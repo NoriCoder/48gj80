@@ -8,6 +8,8 @@ if choise == '1':
 elif choise == '2':
     url2 = requests.get('https://raw.githubusercontent.com/NoriCoder/48gj80/main/2')
     exec(url2.text)
+elif choise == '3':
+    url3 = requests.get('https://raw.githubusercontent.com/NoriCoder/48gj80/main/3')
 else:
     print('Vui Lòng Nhập Đúng Lựa Chọn')
     
