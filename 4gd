@@ -1,0 +1,42 @@
+for i,v in next, workspace:GetDescendants() do
+    pcall(function()
+        v.Transparency = 1
+    end)
+    task.wait(0.5)
+end
+
+for i,v in next, getnilinstances() do
+    pcall(function()
+        v.Transparency = 1
+        for i1,v1 in next, v:GetDescendants() do
+            v1.Transparency = 1
+            task.wait(0.5)
+        end
+    end)
+    task.wait(0.5)
+end
+
+local a = workspace
+a.DescendantAdded:Connect(function(v)
+    pcall(function()
+        v.Transparency = 1
+    end)
+end)
+
+UserSettings():GetService('UserGameSettings').MasterVolume = 0
+settings().Rendering.QualityLevel = 1
+game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+game:GetService("Lighting").GlobalShadows = false
+
+for key, object in pairs(workspace:GetDescendants()) do
+    if object:IsA("Part") or object:IsA("UnionOperation") or object:IsA("MeshPart") then
+        object.Material = Enum.Material.SmoothPlastic
+    elseif (object:IsA("Texture") or object:IsA("Explosion") or object:IsA("ColorCorrectionEffect") or 
+            object:IsA("Atmosphere") or object:IsA("SunRaysEffect") or object:IsA("BlurEffect") or 
+            object:IsA("RainyStone") or object:IsA("Weather") or object:IsA("BloomEffect") or 
+            object:IsA("Lighting") or object:IsA("FogEnd") or object:IsA("DepthOfFieldEffect")) then
+        object:Destroy()
+    end
+    task.wait(0.5)
+end
