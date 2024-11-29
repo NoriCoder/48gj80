@@ -1,1 +1,27 @@
-
+local api = "http://192.168.1.131:6969/"
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local req = http_request or request or HttpPost or syn.request
+local Http = game:GetService('HttpService')
+local function sendRequest(url, method, headers, data)
+    req({
+        Url = url,
+        Method = method,
+        Headers = headers or nil,
+        Body = data or nil})
+end
+while task.wait() do
+    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local locationPlayer = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        local locationDoorRace = game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.Door.RightDoor.Union.Position
+        if (locationPlayer-locationDoorRace).Magnitude <= 50 then
+            sendRequest(api .. "ready", 'POST', {['Content-Type']="text/plain"}, game.Players.LocalPlayer.Name)
+            local response = req({Url = api .. "activate?username=" .. game.Players.LocalPlayer.Name, Method = "GET"})
+            local data = Http:JSONDecode(response.Body)
+            if data["activate"] then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
+                task.wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+            end
+        end
+    end
+end
