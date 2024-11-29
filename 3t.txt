@@ -1,1 +1,392 @@
+local api = "http://192.168.1.131:6969/"
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local req = http_request or request or HttpPost or syn.request
+local Http = game:GetService('HttpService')
+local statusRaceV4 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
+local configHelper = [[{"InstanceStats":false,"AutoBuyFruitsAdvanceStock":false,"AutoClick":false,"ImageKaitun":"","SemiNoBusyCharacter":false,"AutoHallowScythe":false,"AutoFarmChests":false,"SemiNoClip":false,"EnabledFactoryFarm":false,"EnabledResetCharacter":true,"AutoFarmSeaEvents":false,"EnabledDriveBoats":false,"AutoAwakenerFruits":false,"AutoSharkmanKarate":false,"HopUntilFoundGodChalice":false,"AutoRandomFruits":false,"AutoTrident":false,"LimitValues":false,"ByPassTP":false,"AutoRainbowHaki":false,"PlayersESP":false,"AutoRaceCyborg":false,"FovSize":350,"AimbotSkill":false,"AutoFinishTrail":true,"EnabledFullBright":false,"Fly":false,"AutoFarmSeaBeasts":false,"LimitAmount":1,"EnabledSpawnCakePrince":false,"EnabledRiskModeChests":false,"EnabledBuyLegendarySwordHOP":false,"Version":"MARUNEWUIBF20NEWUI","AutoFindFullMoon":false,"AutoObservationv2":false,"SelectIgnore":[],"AutoFarmPlayer":false,"AutoFarmBoneMasteryFruits":false,"AutoPole":false,"AutoElectricClaw":false,"AutoFarmBone":false,"AutoCakePrince":false,"AutoFarmLevel":false,"AutoAncientOneQuest":true,"BoneSurprise":false,"EnabledHOPFindFruits":false,"AutoWhiteScreen":false,"RTXMode":false,"SelectDungeons":"","PointsUP":1,"AutoCollectPresent":false,"AutoPullLever":false,"AutoActiveHelper":false,"SkillDelayV":1,"AutoFarmEctoplasm":false,"EnabledBuyOrderBossChip":false,"AutoValkyrie":false,"EnabledFullMoonHOP":false,"SelectSeaZones":"","EnabledUnstoreFruits":false,"AutoTushita":false,"AutoWarriorHelmet":false,"SelectMethodSword":"","AutoBuyLegendarySword":false,"DontShowEmuChange":false,"SelectHost":"","EnabledCastleRaid":false,"DisabledDamageText":false,"EnabledMysitcIslandHOP":false,"SelectBosses":[],"JobId":"","AutoFarmCakePiratesMasteryFruits":false,"AutoFarmMirrorFractral":false,"AutoFindAdvanceFruitsDealer":false,"AutoCraftSharkAnchor":false,"EnabledDriveBoatsShip":false,"AutoFarmAllSwordMastery":false,"IslandESP":false,"AutoRengoku":false,"AutoCollectAzureEmber":false,"DistanceX":5,"DisabledCanCanCollideBoat":false,"AutoFarmDarkFragments":false,"EnabledChestsHOP":false,"AutoRaceGhoul":false,"MobAura":false,"AutoEvoRacev2":false,"AutoFarmBoneMasteryGun":false,"FruitCost":1000000,"SpeedBoat":250,"EnabledRaceTransformed":false,"SkillDelayX":1,"WhiteScreen":false,"AutoFarmFruitsMastery":false,"AutoMidnightBlade":false,"SelectStats":[],"SelectEnchancementsColor":[],"AutoMusketeer":false,"GearESP":false,"SelectGears":"","AutoFarmCakePiratesMasteryGun":false,"AutoSelcetDungeons":false,"NextPlayerIn":6,"AutoFarmMaterials":false,"EnabledKillPlayers":false,"EnabledHOPServerItems":false,"MasterofAurasESP":false,"FastAttack":true,"AutoCameraToMoon":false,"AutoFarmDungeon":false,"EnabledFarmSeaBeastsHOP":false,"EnabledAcceptQuests":false,"SelectBoats":"","PryBone":false,"AutoDeathStep":false,"AutoFinishDoughAwaken":false,"AutoFindMysticIsland":false,"DistanceY":28,"MaxDisc":2500,"AutoSuperhuman":false,"SelectLimit":"","AutoYama":false,"AutoBuyEnchancementColor":false,"SelectAbilities":[],"AutoFinishQuestsYama":false,"SelectCombat":"","EnabledBringFruits":false,"DriveForWard":false,"SpawmJoin":false,"EnabledTweenToRaceDoors":true,"AutoBuddy_Sword":false,"AutoCavander":false,"AutoFarmBosses":false,"AutoFinishQuestsTushita":false,"SelectIsland":"","AutoGodhuman":false,"EnabledBuyChips":false,"EnabledFarmBountyHOP":false,"NoCooldownAbilities":false,"AutoFarmBounty":false,"TryluckBone":false,"AimbotGun":false,"AutoFinishPhoenixAwaken":false,"EnabledUsingBoat":false,"AutoBisento2":false,"EnabledKillAura":false,"SelectSkills":["Z","X","C"],"EnabledFarmObservationHOP":false,"SaveEmuChange":false,"EnabledHOPEliteHunter":false,"TeleportPlayers":false,"AutoFarmOrderBoss":false,"SelectPlayer":"","EnabledBuyGears":true,"AutoFarmMysticIslandChests":false,"AutoSoulGuiTar":false,"AutoEliteHunter":false,"AutoDragonTalon":false,"EnabledCursedChests":false,"AutoEvoRacev3":false,"LegendarySwordDealerESP":false,"AutoStoredFruits":false,"AutoCursedDualKatana":false,"SpectatePlayers":false,"AimbotMethod":"","AutoDragonTrident":false,"EnabledTweenToFruits":false,"AutoActiveRaces":false,"AutoStats":false,"EnabledFovAimbot":false,"AutoFarmGhostShip":false,"AutoSaber":false,"SkillDelayC":1,"HopInTime":200,"TeleportIsland":false,"IgnoreMonsters":[],"AutoSerpent_Bow":false,"EnabledBuyEnchancementColorHOP":false,"AutoTTK":false,"DistanceZ":5,"SafeMode":false,"AutoPressW":false,"EnabledFarmDungeonHOP":false,"MysticIslandESP":false,"AutoFarmObservation":false,"KillAtForMastery":30,"EnabledStartDungeon":false,"SkillDelayZ":1,"SelectDevilFruits":[],"WalkOnWater":false,"SelectMaterials":[],"DamageAura":false,"FruitsESP":false,"EnabledPvP":false,"EnabledTradeWithSpy":false,"SelectWeapon":"Melee","AutoTradeSweetChalice":false,"AutoBuyFruits":false,"AutoSwanGlasses":false,"EnabledRemoveFogs":false,"AutoFarmGunMastery":false,"SemiMinkRace":false}]]
+local configFarmer = [[{"InstanceStats":false,"AutoBuyFruitsAdvanceStock":false,"AutoClick":false,"ImageKaitun":"","SemiNoBusyCharacter":false,"AutoHallowScythe":false,"AutoFarmChests":false,"SemiNoClip":false,"EnabledFactoryFarm":false,"EnabledResetCharacter":false,"AutoFarmSeaEvents":false,"EnabledDriveBoats":false,"AutoAwakenerFruits":false,"AutoSharkmanKarate":false,"HopUntilFoundGodChalice":false,"AutoRandomFruits":false,"AutoTrident":false,"LimitValues":false,"ByPassTP":false,"AutoRainbowHaki":false,"PlayersESP":false,"AutoRaceCyborg":false,"FovSize":350,"AimbotSkill":false,"AutoFinishTrail":true,"EnabledFullBright":false,"Fly":false,"AutoFarmSeaBeasts":false,"LimitAmount":1,"EnabledSpawnCakePrince":false,"EnabledRiskModeChests":false,"EnabledBuyLegendarySwordHOP":false,"Version":"MARUNEWUIBF20NEWUI","AutoFindFullMoon":false,"AutoObservationv2":false,"SelectIgnore":[],"AutoFarmPlayer":false,"AutoFarmBoneMasteryFruits":false,"AutoPole":false,"AutoElectricClaw":false,"AutoFarmBone":false,"AutoCakePrince":false,"AutoFarmLevel":false,"AutoAncientOneQuest":true,"BoneSurprise":false,"EnabledHOPFindFruits":false,"AutoWhiteScreen":false,"RTXMode":false,"SelectDungeons":"","PointsUP":1,"AutoCollectPresent":false,"AutoPullLever":false,"AutoActiveHelper":false,"SkillDelayV":1,"AutoFarmEctoplasm":false,"EnabledBuyOrderBossChip":false,"AutoValkyrie":false,"EnabledFullMoonHOP":false,"SelectSeaZones":"","EnabledUnstoreFruits":false,"AutoTushita":false,"AutoWarriorHelmet":false,"SelectMethodSword":"","AutoBuyLegendarySword":false,"DontShowEmuChange":false,"SelectHost":"","EnabledCastleRaid":false,"DisabledDamageText":false,"EnabledMysitcIslandHOP":false,"SelectBosses":[],"JobId":"","AutoFarmCakePiratesMasteryFruits":false,"AutoFarmMirrorFractral":false,"AutoFindAdvanceFruitsDealer":false,"AutoCraftSharkAnchor":false,"EnabledDriveBoatsShip":false,"AutoFarmAllSwordMastery":false,"IslandESP":false,"AutoRengoku":false,"AutoCollectAzureEmber":false,"DistanceX":5,"DisabledCanCanCollideBoat":false,"AutoFarmDarkFragments":false,"EnabledChestsHOP":false,"AutoRaceGhoul":false,"MobAura":false,"AutoEvoRacev2":false,"AutoFarmBoneMasteryGun":false,"FruitCost":1000000,"SpeedBoat":250,"EnabledRaceTransformed":false,"SkillDelayX":1,"WhiteScreen":false,"AutoFarmFruitsMastery":false,"AutoMidnightBlade":false,"SelectStats":[],"SelectEnchancementsColor":[],"AutoMusketeer":false,"GearESP":false,"SelectGears":"","AutoFarmCakePiratesMasteryGun":false,"AutoSelcetDungeons":false,"NextPlayerIn":6,"AutoFarmMaterials":false,"EnabledKillPlayers":false,"EnabledHOPServerItems":false,"MasterofAurasESP":false,"FastAttack":true,"AutoCameraToMoon":false,"AutoFarmDungeon":false,"EnabledFarmSeaBeastsHOP":false,"EnabledAcceptQuests":false,"SelectBoats":"","PryBone":false,"AutoDeathStep":false,"AutoFinishDoughAwaken":false,"AutoFindMysticIsland":false,"DistanceY":28,"MaxDisc":2500,"AutoSuperhuman":false,"SelectLimit":"","AutoYama":false,"AutoBuyEnchancementColor":false,"SelectAbilities":[],"AutoFinishQuestsYama":false,"SelectCombat":"","EnabledBringFruits":false,"DriveForWard":false,"SpawmJoin":false,"EnabledTweenToRaceDoors":true,"AutoBuddy_Sword":false,"AutoCavander":false,"AutoFarmBosses":false,"AutoFinishQuestsTushita":false,"SelectIsland":"","AutoGodhuman":false,"EnabledBuyChips":false,"EnabledFarmBountyHOP":false,"NoCooldownAbilities":false,"AutoFarmBounty":false,"TryluckBone":false,"AimbotGun":false,"AutoFinishPhoenixAwaken":false,"EnabledUsingBoat":false,"AutoBisento2":false,"EnabledKillAura":false,"SelectSkills":["Z","X","C"],"EnabledFarmObservationHOP":false,"SaveEmuChange":false,"EnabledHOPEliteHunter":false,"TeleportPlayers":false,"AutoFarmOrderBoss":false,"SelectPlayer":"","EnabledBuyGears":true,"AutoFarmMysticIslandChests":false,"AutoSoulGuiTar":false,"AutoEliteHunter":false,"AutoDragonTalon":false,"EnabledCursedChests":false,"AutoEvoRacev3":false,"LegendarySwordDealerESP":false,"AutoStoredFruits":false,"AutoCursedDualKatana":false,"SpectatePlayers":false,"AimbotMethod":"","AutoDragonTrident":false,"EnabledTweenToFruits":false,"AutoActiveRaces":false,"AutoStats":false,"EnabledFovAimbot":false,"AutoFarmGhostShip":false,"AutoSaber":false,"SkillDelayC":1,"HopInTime":200,"TeleportIsland":false,"IgnoreMonsters":[],"AutoSerpent_Bow":false,"EnabledBuyEnchancementColorHOP":false,"AutoTTK":false,"DistanceZ":5,"SafeMode":false,"AutoPressW":false,"EnabledFarmDungeonHOP":false,"MysticIslandESP":false,"AutoFarmObservation":false,"KillAtForMastery":30,"EnabledStartDungeon":false,"SkillDelayZ":1,"SelectDevilFruits":[],"WalkOnWater":false,"SelectMaterials":[],"DamageAura":false,"FruitsESP":false,"EnabledPvP":false,"EnabledTradeWithSpy":false,"SelectWeapon":"Melee","AutoTradeSweetChalice":false,"AutoBuyFruits":false,"AutoSwanGlasses":false,"EnabledRemoveFogs":false,"AutoFarmGunMastery":false,"SemiMinkRace":false}]]
+local listRaceSkill = {
+    ["Human"] = "Last Resort",
+    ["Mink"] = "Agility",
+    ["Fishman"] = "Water Body",
+    ["Skypea"] = "Heavenly Blood",
+    ["Ghoul"] = "Heightened Senses",
+    ["Cyborg"] = "Energy Core"
+}
+
+local commandHop = false
+local listHelpers = {}
+local listFarmers = {}
+local listHelpersInGame = {}
+local listFarmersInGame = {}
+
+local function saveDataToFile(folder, filename, dataToSave)
+    if not isfolder(folder) then
+        makefolder(folder)
+    end
+    if not isfile(folder .. "/" .. filename) then
+        makefolder(filename)
+    end
+
+    writefile(folder .. "/" .. filename, dataToSave)
+end
+
+local function sendRequest(url, method, headers, data)
+    req({
+        Url = url,
+        Method = method,
+        Headers = headers or nil,
+        Body = data or nil})
+end
+
+local function teleport(jobId)
+    ReplicatedStorage.__ServerBrowser:InvokeServer("teleport", jobId)
+end
+
+function checkFullMoon()
+	local timeMoon = game.Lighting:GetMinutesAfterMidnight()
+    if timeMoon <= 300 then
+        timeMoon = timeMoon + 1440
+    end
+    if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
+        if timeMoon > 1020 and timeMoon < 1740 then
+            return true
+        else
+            return false
+        end
+    else
+		return false
+    end
+end
+
+function checkJobID()
+    local response = req({Url = api .. "JobID", Method = "GET"})
+    local list_data = Http:JSONDecode(response.Body)
+    
+    if list_data['data'] then
+        for _, job_id in ipairs(list_data['data']) do
+            if game.JobId == job_id then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function checkLocation()
+    local inGameHelper = false
+    local inGameFarmer = false
+    for _, player in ipairs(game:GetService("Players"):GetChildren()) do
+        for _, helper in ipairs(listHelpers) do
+            if helper == player.Name then
+                inGameHelper = true
+            end
+        end
+    end
+    for _, player in ipairs(game:GetService("Players"):GetChildren()) do
+        for _, farmer in ipairs(listFarmers) do
+            if farmer == player.Name then
+                inGameFarmer = true
+            end
+        end
+    end
+    if inGameHelper and inGameFarmer then
+        return true
+    end
+    return false
+end
+
+function getRaceTier()
+	raceValue = game:GetService("Players").LocalPlayer.Data.Race.Value
+	tierValue = game:GetService("Players").LocalPlayer.Data.Race.C.Value
+	return raceValue .. " T" .. tierValue
+end
+
+function getEvoTier()
+    local CheckAlchemist = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+    if CheckAlchemist == -2 then
+        local CheckWenlocktoad = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
+        if CheckWenlocktoad == -2 then
+            if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+                return 4
+            end
+            return 3
+        end
+        return 2
+    end
+    return 1
+end
+
+function checkRaceSkill(racePlayer)
+    for i, v in pairs(listRaceSkill) do
+        if i == racePlayer then
+            return v
+        end
+    end
+end
+
+function checkTurnV3Farmers()
+    for _, farm in ipairs(listFarmersInGame) do
+        if game:GetService("Players"):FindFirstChild(farm) then
+            local player = game:GetService("Players")[farm]
+            if player ~= game:GetService("Players").LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local locationPlayer = player.Character.HumanoidRootPart.Position
+                local locationDoorRace = game:GetService("Workspace").Map["Temple of Time"][player.Data.Race.Value .. "Corridor"].Door.Door.RightDoor.Union.Position
+
+                if (locationPlayer-locationDoorRace).Magnitude <= 50 then
+                    if player.Character.HumanoidRootPart:FindFirstChild(checkRaceSkill(player.Data.Race.Value)) then
+                        return false
+                    end
+                end
+                if player.PlayerGui.Main.Timer.Visible then
+                    return false
+                end
+            end
+        end
+    end
+    return true
+end
+
+
+function checkHelpersInGame()
+    for _, helper in ipairs(listHelpers) do
+        if helper == game.Players.LocalPlayer.Name then
+            return true
+        end
+    end
+    return false
+end
+
+task.spawn(function()
+    while task.wait(3) do
+        pcall(function()
+            local response = req({Url = api .. "data", Method = "GET"})
+            local list_data = Http:JSONDecode(response.Body)
+
+            if list_data['farmers'] then
+                listFarmers = list_data['farmers']
+            end
+            if list_data['helpers'] then
+                listHelpers = list_data['helpers']
+            end
+        end)
+    end
+end)
+
+task.spawn(function()
+    while task.wait(3) do
+        pcall(function()
+            local currentListFarmers = {}
+            if listFarmers then
+                for _, player in ipairs(game:GetService("Players"):GetChildren()) do
+                    for _, farmer in ipairs(listFarmers) do
+                        if farmer == player.Name then
+                            print(farmer)
+                            table.insert(currentListFarmers, farmer)
+                        end
+                    end
+                end
+                listFarmersInGame = currentListFarmers
+            end
+        end)
+    end
+end)
+print(Http:JSONEncode(listFarmersInGame))
+
+task.spawn(function()
+    while task.wait(3) do
+        pcall(function()
+            local currentListHelper = {}
+            if listHelpers then
+                for _, player in ipairs(game:GetService("Players"):GetChildren()) do
+                    for _, helper in ipairs(listHelpers) do
+                        if helper == player.Name then
+                            table.insert(currentListHelper, helper)
+                        end
+                    end
+                end
+                listHelpersInGame = currentListHelper
+            end
+        end)
+    end
+end)
+
+sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Load Game"}))
+repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game.Players
+repeat task.wait() until game.Players.LocalPlayer
+repeat task.wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
+if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+    repeat task.wait()
+        if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
+            for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container["Marines"].Frame.TextButton.Activated)) do
+                for a, b in pairs(getconnections(game:GetService("UserInputService").TouchTapInWorld)) do
+                    b:Fire() 
+                end
+                v.Function()
+            end
+        end
+    until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+end
+
+sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Join Game Success"}))
+
+if game.PlaceId ~= 7449423635 then
+    task.wait(5)
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
+end
+
+function autoTrialHelper()
+    sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Auto Trial Helper"}))
+    for _, player in ipairs(listFarmersInGame) do
+        if game:GetService("Players"):FindFirstChild(player) then
+            player = game:GetService("Players")[player]
+            if player ~= game:GetService("Players").LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local locationPlayer = player.Character.HumanoidRootPart.Position
+                local locationDoorRace = game:GetService("Workspace").Map["Temple of Time"][player.Data.Race.Value .. "Corridor"].Door.Door.RightDoor.Union.Position
+                sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Check Location Farmer And Door"}))
+
+                if (locationPlayer-locationDoorRace).Magnitude <= 50 then
+                    sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Check Race Skill Farmer"}))
+
+                    if player.Character.HumanoidRootPart:FindFirstChild(checkRaceSkill(player.Data.Race.Value)) then
+                        game:GetService("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
+                        task.wait(0.1)
+                        game:GetService("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+                    end
+                end
+            end
+        end
+    end
+end
+
+function autoTrialFarmer()
+    sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Auto Trial Farmer"}))
+    if listHelpersInGame then
+        if game:GetService("Players"):FindFirstChild(listHelpersInGame[1]) and game:GetService("Players"):FindFirstChild(listHelpersInGame[2]) then
+            local locationHelperOne = game:GetService("Players")[listHelpersInGame[1]].Character.HumanoidRootPart.Position
+            local locationHelperTwo = game:GetService("Players")[listHelpersInGame[2]].Character.HumanoidRootPart.Position
+            if locationHelperOne and locationHelperTwo then
+                local locationNearHelperOne = game:GetService("Workspace").Map["Temple of Time"][game:GetService("Players")[listHelpersInGame[1]].Data.Race.Value .. "Corridor"].Door.Door.RightDoor.Union.Position
+                local locationNearHelperTwo = game:GetService("Workspace").Map["Temple of Time"][game:GetService("Players")[listHelpersInGame[2]].Data.Race.Value .. "Corridor"].Door.Door.RightDoor.Union.Position
+
+                if (locationHelperOne-locationNearHelperOne).Magnitude <= 50 and (locationHelperTwo-locationNearHelperTwo).Magnitude <= 50 then
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
+                    task.wait(0.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+                end
+            end
+        end
+    end
+end
+
+
+task.spawn(function()
+    sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Check Server Full"}))
+    while task.wait() do
+        pcall(function()
+            if checkHelpersInGame() then
+                if #game.Players:GetChildren() == 12 and not checkLocation() then
+                    commandHop = true
+                end
+            end
+        end)
+    end
+end)
+
+sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Save Config"}))
+if checkHelpersInGame() then
+    saveDataToFile("Maru Hub Premium Scripts", "Blox_Fruits-" .. game.Players.LocalPlayer.Name .. ".json", configHelper)
+else
+    saveDataToFile("Maru Hub Premium Scripts", "Blox_Fruits-" .. game.Players.LocalPlayer.Name .. ".json", configFarmer)
+end
+for i,v in next, workspace:GetDescendants() do
+    pcall(function()
+        v.Transparency = 1
+    end)
+end
+
+for i,v in next, getnilinstances() do
+    pcall(function()
+        v.Transparency = 1
+        for i1,v1 in next, v:GetDescendants() do
+            v1.Transparency = 1
+        end
+    end)
+end
+
+workspace.DescendantAdded:Connect(function(v)
+    pcall(function()
+        v.Transparency = 1
+    end)
+end)
+
+UserSettings():GetService('UserGameSettings').MasterVolume = 0
+settings().Rendering.QualityLevel = 1
+game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+game:GetService("Lighting").GlobalShadows = false
+
+for key, object in pairs(workspace:GetDescendants()) do
+    if object:IsA("Part") or object:IsA("UnionOperation") or object:IsA("MeshPart") then
+        object.Material = Enum.Material.SmoothPlastic
+    elseif (object:IsA("Texture") or object:IsA("Explosion") or object:IsA("ColorCorrectionEffect") or 
+            object:IsA("Atmosphere") or object:IsA("SunRaysEffect") or object:IsA("BlurEffect") or 
+            object:IsA("RainyStone") or object:IsA("Weather") or object:IsA("BloomEffect") or 
+            object:IsA("Lighting") or object:IsA("FogEnd") or object:IsA("DepthOfFieldEffect")) then
+        object:Destroy()
+    end
+end
+sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Exec Script"}))
+getgenv().Key = "MARU-9FCU-WDQMI-W8FY-E4BLX-70XY"
+getgenv().id = "1187269515571114156"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
+
+task.spawn(function()
+    while task.wait() do
+        pcall(function()
+            if game.Players.LocalPlayer.Team ~= nil and game:IsLoaded() then
+                sendRequest(api .. "status", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, status="Check Type"}))
+                if checkHelpersInGame() then
+                    autoTrialHelper()
+                else
+                    if checkTurnV3Farmers() then
+                        autoTrialFarmer()
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+task.spawn(function()
+    while task.wait(3) do
+        pcall(function()
+            if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+                if getEvoTier() >= 3 then
+                    if game:GetService("Players").LocalPlayer.Data.Race.C.Value == 5 and statusRaceV4 == 8 then
+                        writefile(game.Players.LocalPlayer.Name .. ".txt", "Completed-" ..  getRaceTier())
+                        sendRequest(api .. "FG_Done", 'POST', {['Content-Type']="text/plain"}, game.Players.LocalPlayer.Name)
+                        game:GetService("Players").LocalPlayer:Kick(getRaceTier())
+                        
+                    elseif game:GetService("Players").LocalPlayer.Data.Race.C.Value > 5 then
+                        writefile(game.Players.LocalPlayer.Name .. ".txt", "Completed-" ..  getRaceTier())
+                        sendRequest(api .. "FG_Done", 'POST', {['Content-Type']="text/plain"}, game.Players.LocalPlayer.Name)
+                        game:GetService("Players").LocalPlayer:Kick(getRaceTier())
+                    end
+                else
+                    complete_race = "Completed-" .. game:GetService("Players").LocalPlayer.Data.Race.Value .. " V" .. getEvoTier()
+                    writefile(game.Players.LocalPlayer.Name .. ".txt", complete_race)
+                    sendRequest(api .. "ThieuRace", 'POST', {['Content-Type']="application/json"}, Http:JSONEncode({username=game.Players.LocalPlayer.Name, race=complete_race}))
+                    game:GetService("Players").LocalPlayer:Kick(complete_race)
+                end
+            else
+                writefile(game.Players.LocalPlayer.Name .. ".txt", "Completed-ChuaGat")
+                sendRequest(api .. "ChuaGat", 'POST', {['Content-Type']="text/plain"}, game.Players.LocalPlayer.Name)
+                game:GetService("Players").LocalPlayer:Kick("ChuaGat")
+            end
+        end)
+    end
+end)
 
