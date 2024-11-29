@@ -1,3 +1,6 @@
+getgenv().Key = "MARU-9FCU-WDQMI-W8FY-E4BLX-70XY"
+getgenv().id = "1187269515571114156"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
 local api = "http://192.168.1.131:6969/"
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local req = http_request or request or HttpPost or syn.request
